@@ -6,8 +6,7 @@ from tkinter  import PhotoImage
 from tkinter import *
 from PIL import ImageTk, Image
 import xmlrpc.client
- 
-       
+      
 
 class FlowRateAppClient:
     def __init__(self, root):
@@ -41,15 +40,12 @@ class FlowRateAppClient:
         self.tabs = ttk.Notebook(root,style="Custom .TNotebook")
         self.tabs.grid(row=0, column=2, padx=30, pady=30)
 
-        # Additional buttons
+        # Additional buttons and tabs
         email_frame = ttk.Frame(self.tabs)
         self.tabs.add(email_frame, text="Email")
         email_button = ttk.Button(email_frame, text="Send Email",command=self.send_email)
         entry= ttk.Entry(email_frame)
         entry.grid(padx=20,pady=20)
-
-
-        
         
         waveform_button = ttk.Button(root, text="Waveform", command=self.show_waveform,style= 'Large.TButton')
         waveform_button.grid(padx=20, pady=20,row=1,column=2)
@@ -58,9 +54,6 @@ class FlowRateAppClient:
         self.tabs.add(raw_data_frame, text="Raw Data")
         raw_data_button = ttk.Button(raw_data_frame, text="Show Raw Data", command=self.show_raw_data)
         raw_data_button.grid(padx=10, pady=10,row=1,column=3)
-
-
-
         
         # Create a custom ttk style for larger buttons
         self.style = ttk.Style()
@@ -88,13 +81,7 @@ class FlowRateAppClient:
     def stop_measurement(self):
         self.is_measuring = False
         self.start_button.configure(state=tk.NORMAL)
-        self.stop_button.configure(state=tk.DISABLED)
-
-    #def update_flow_rate(self):
-        # Get the flow rate from the server
-        #flow_rate = self.server_proxy.get_flow_rate()
-        #self.flow_rate_label.configure(text=f"Flow Rate: {flow_rate:.2f} L/s")
-        #self.root.after(1000, self.update_flow_rate)  # Update every 1 second   
+        self.stop_button.configure(state=tk.DISABLED)   
 
     def measure_flow_rate(self):
         if self.is_measuring:
@@ -137,12 +124,8 @@ class FlowRateAppClient:
         # Destroy existing widgets and recreate the GUI
         for widget in self.root.winfo_children():
             widget.destroy()
-        self.__init__(self.root)
+        self.__init__(self.root)    
     
-    
-    
-    
-
 def main():
     root=tk.Tk()
     image_path= PhotoImage(file=r"C:\Users\faral\Downloads\Navistar logo(resize).png") #image defined and image path
@@ -150,18 +133,8 @@ def main():
     bg_image.place(relheight=0.5,relwidth=0.25) #image size
     bg_image.grid(row=0,column=4)#image location in the window
     
-    #def callback(e):
-    # image_path2 = ImageTk.PhotoImage(Image.open(file=r"C:\Users\faral\Downloads\Navistar logo(resize).png"))
-     #bg_image.configure(image=image_path2)
-     #bg_image = image_path2
-
-    # root.bind("<Return>", e)
-    
-    
     app= FlowRateAppClient(root)
     root.mainloop()
     
-    
-
 if __name__ == "__main__":
     main()
